@@ -1,0 +1,110 @@
+CREATE TABLE pets (
+    petid varchar,
+    name varchar,
+    kind varchar,
+    gender varchar,
+    age int,
+    ownerid varchar
+);
+
+-- WINDOWS
+COPY pets FROM 'C:\Users\u6027697\Desktop\jointables\Pets.csv' DELIMITER ',' CSV HEADER;
+
+
+
+
+
+CREATE TABLE owners (
+    ownerid varchar,
+    name varchar,
+    surname varchar,
+    streetaddress varchar,
+    city varchar,
+    state varchar(2),
+    statefull varchar,
+    zipcode varchar
+);
+
+-- WINDOWS
+COPY owners FROM 'C:\Users\u6027697\Desktop\jointables\Owners.csv' DELIMITER ',' CSV HEADER;
+
+
+
+
+
+CREATE TABLE proceduredetails (
+    proceduretype varchar,
+    proceduresubcode varchar,
+    description varchar,
+    price float
+);
+
+-- WINDOWS
+COPY proceduredetails FROM 'C:\Users\u6027697\Desktop\jointables\ProceduresDetails.csv' DELIMITER ',' CSV HEADER;
+
+
+
+
+
+ 
+
+CREATE TABLE procedurehistory (
+    petid varchar,
+    proceduredate date,
+    proceduretype varchar,
+    proceduresubcode varchar
+);
+
+-- WINDOWS
+COPY procedurehistory FROM 'C:\Users\u6027697\Desktop\jointables\ProceduresHistory-1.csv' DELIMITER ',' CSV HEADER;
+
+
+---INNER JOIN
+SELECT *
+FROM PETS AS A
+INNER JOIN PROCEDUREHISTORY AS B
+ON A.PETID = B.PETID
+
+---FULL OUTER JOIN
+SELECT *
+FROM PETS AS A
+FULL OUTER JOIN PROCEDUREHISTORY AS B
+ON A.PETID = B.PETID;
+
+
+-----JOINING ON MULTIPLE FIELDS
+
+SELECT *
+FROM PROCEDUREHISTORY;
+
+SELECT *
+FROM PROCEDUREDETAILS;
+
+SELECT *
+FROM PROCEDUREHISTORY AS A
+LEFT JOIN PROCEDUREDETAILS AS B
+ON A.PROCEDURESUBCODE = B.PROCEDURESUBCODE
+AND A.PROCEDURETYPE = B.PROCEDURETYPE; 
+
+-----COMPLEX JOIN
+
+SELECT *
+FROM PETS AS A
+INNER JOIN PROCEDUREHISTORY AS B
+ON A.PETID = B.PETID
+LEFT JOIN PROCEDUREDETAILS AS C
+ON B.PROCEDURETYPE = C.PROCEDURETYPE 
+AND B.PROCEDURESUBCODE = C.PROCEDURESUBCODE;
+
+--- CLEANING UP YOUR JOINS
+SELECT *
+FROM PETS AS A
+INNER JOIN PROCEDUREHISTORY AS B
+ON A.PETID = B.PETID
+LEFT JOIN PROCEDUREDETAILS AS C
+ON B.PROCEDURETYPE = C.PROCEDURETYPE 
+AND B.PROCEDURESUBCODE = C.PROCEDURESUBCODE;
+
+
+
+
